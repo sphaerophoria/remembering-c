@@ -11,7 +11,7 @@ struct circular_buffer {
     size_t pop_head;
 };
 
-#define circular_buffer_init(_capacity) { \
+#define circular_buffer_init(_capacity) (struct circular_buffer) { \
     .capacity = (_capacity) \
 }
 
