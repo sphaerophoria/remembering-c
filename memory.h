@@ -5,6 +5,7 @@
 #include <sys/mman.h>
 
 #define PAGE_SIZE_LOG2 (12)
+#define PAGE_SIZE (1 << PAGE_SIZE_LOG2)
 
 static inline void* round_down_by_pow_2(void* ptr, uint8_t pow) {
     size_t ptr_int = (size_t)ptr;
