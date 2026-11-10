@@ -37,7 +37,7 @@ char* string_tape_push(struct string_tape *tape, char* data, size_t data_len) {
 // Tell me where the oldest string I need to remember is
 int string_tape_mark_start(struct string_tape *tape, char* first) {
     if (first < tape->data || first >= tape->data + tape->len) return -EINVAL;
-    tape->start = first - tape->data;
+    tape->start = (size_t)(first - tape->data);
     return 0;
 }
 

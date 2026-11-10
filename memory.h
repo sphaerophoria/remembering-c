@@ -9,7 +9,7 @@
 
 static inline void* round_down_by_pow_2(void* ptr, uint8_t pow) {
     size_t ptr_int = (size_t)ptr;
-    size_t mask = (1 << pow) - 1;
+    size_t mask = ((size_t)1 << pow) - 1;
     ptr_int &= ~mask;
     return (void*) ptr_int;
 }
@@ -17,7 +17,7 @@ static inline void* round_down_by_pow_2(void* ptr, uint8_t pow) {
 static inline void* round_up_by_pow_2(void* ptr, uint8_t pow) {
     // (x + page_size - 1) & ~(page_size - 1) for align up
     size_t ptr_int = (size_t)ptr;
-    size_t mask = (1 << pow) - 1;
+    size_t mask = ((size_t)1 << pow) - 1;
     ptr_int += mask;
     ptr_int &= ~mask;
     return (void*)ptr_int;
@@ -30,5 +30,5 @@ static inline int reclaim_mem_range(void* start, void* end) {
 
     if (end <= start) return 0;
 
-    return madvise(start, end - start, MADV_DONTNEED);
+    return madvise(start, (size_t)(end - start), MADV_DONTNEED);
 }

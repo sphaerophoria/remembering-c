@@ -218,12 +218,12 @@ void chat_server_service_conn(struct chat_server *server, size_t connection_id) 
     struct connection *connection = &server->connections[connection_id];
 
     while (true) {
-        int bytes_read = read(
+        ssize_t bytes_read = read(
                 connection->meta.fd,
                 connection->read_buf + connection->meta.read_cursor,
                 CONN_READ_BUF_SIZE - connection->meta.read_cursor);
 
-        printf("Bytes read %d %d\n", bytes_read, errno);
+        printf("Bytes read %ld %d\n", bytes_read, errno);
 
         if (bytes_read < 0) {
             if (errno == EAGAIN) {
@@ -241,7 +241,7 @@ void chat_server_service_conn(struct chat_server *server, size_t connection_id) 
             connections_close(server->connections, &server->connection_pool, connection_id);
             return;
         } else {
-            connection->meta.read_cursor += bytes_read;
+            connection->meta.read_cursor += (size_t)bytes_read;
         }
     }
 }

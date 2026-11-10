@@ -34,7 +34,7 @@ int event_loop_poll(struct event_loop *loop, size_t *event) {
         }
 
         loop->event_idx = 0;
-        loop->buffered_events = ret;
+        loop->buffered_events = (uint16_t)ret;
     }
 }
 

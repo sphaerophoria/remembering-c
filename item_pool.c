@@ -16,7 +16,7 @@ struct item_pool item_pool_init(uint64_t *buf, size_t num_elems) {
 int item_pool_alloc(struct item_pool *pool, size_t *out) {
     for (size_t i = 0; i < ITEM_POOL_BUF_SIZE(pool->num_elems); i++) {
         if (pool->currently_allocated[i] == UINT64_MAX) continue;
-        int first_free = __builtin_ctzl(~pool->currently_allocated[i]);
+        size_t first_free = (size_t)__builtin_ctzl(~pool->currently_allocated[i]);
 
         *out = i * 64 + first_free;
 
